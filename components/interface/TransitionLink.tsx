@@ -8,11 +8,13 @@ import { ReactNode } from "react";
 interface Props extends LinkProps {
     children: ReactNode;
     href: string;
+    className?: string;
 }
 
 export const TransitionLink = ({
     children,
     href,
+    className,
     ...props
 }: Props) => {
     const router = useRouter();
@@ -33,6 +35,6 @@ export const TransitionLink = ({
         body?.classList.remove("page-transition");
     }
     return (
-        <Link onClick={(e) => handleTransition(e)} href={href} {...props}>{children}</Link>
+        <Link onClick={(e) => handleTransition(e)} href={href} className={className ? className : ""}{...props}>{children}</Link>
     )
 }

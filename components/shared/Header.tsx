@@ -6,6 +6,8 @@ import AdminLink from "./AdminLink"
 import { getSession } from "@/lib/getServerSession"
 import { fetchUserByEmail } from "@/lib/actions/user.actions"
 import  {InfoLinks}  from "./InfoLinks"
+import { TransitionLink } from "../interface/TransitionLink"
+
 
 const Header = async () => {
  
@@ -21,10 +23,10 @@ const Header = async () => {
     <div className="flex gap-10">
     <nav className="items-center gap-10 hidden lg:flex">
         <AdminLink></AdminLink>
-        <Link href='/' className="Underline">Головна</Link>
-        <Link href='/catalog' className="Underline">Каталог</Link>
-        {email && <Link href={`/liked/${user?._id}`} className="Underline">Уподобані</Link>}
-        {email &&<Link href='/myOrders' className="Underline">Мої замовлення</Link>}
+        <TransitionLink href='/' className="Underline">Головна</TransitionLink>
+        <TransitionLink href='/catalog' className="Underline">Каталог</TransitionLink>
+        {email && <TransitionLink href={`/liked/${user?._id}`} className="Underline">Уподобані</TransitionLink>}
+        {email &&<TransitionLink href='/myOrders' className="Underline">Мої замовлення</TransitionLink>}
         <InfoLinks />
     </nav>
     <div className="flex items-center gap-5">
