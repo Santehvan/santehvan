@@ -2,7 +2,8 @@
  
 import * as React from "react"
 import Link from "next/link"
- 
+import { TransitionLink } from "../interface/TransitionLink"
+
 import { cn } from "@/lib/utils"
 
 import {
@@ -76,7 +77,7 @@ const ListItem = React.forwardRef<
   return (
     <li>
       <NavigationMenuLink asChild>
-        <Link
+        <TransitionLink
           //@ts-ignore
           href={ref}
           className={cn(
@@ -89,7 +90,7 @@ const ListItem = React.forwardRef<
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
             {children}
           </p>
-        </Link>
+        </TransitionLink>
       </NavigationMenuLink>
     </li>
   )
