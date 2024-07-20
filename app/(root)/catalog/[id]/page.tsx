@@ -6,33 +6,39 @@ import Product from '@/lib/models/product.model'
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { revalidatePath } from 'next/cache';
 
 
 const CatalogItem = async (context:any) => {
-  revalidatePath(`/catalog/${context.params.id}`)
-  function removeLastWord(text:string) {
+  function removeLastWord(text:string, color:any) {
     // Видалити пробіли з обох боків рядка, розбити його на масив слів і видалити останнє слово
     let words = text.trim().split('_');
-    let CountWords = words.length;
-    if(CountWords>1){
-      words.pop(); // Видаляє останнє слово
-    }
+    console.log(color)
+    if(color.name=='Колір'){
+      let CountWords = words.length
+      let colorLenght = color.value.trim().split(' ').length;
+      console.log(CountWords)
+      if(CountWords>1){
+        words.splice(-colorLenght);
+      }
+    } 
     
+
     return words.join('_'); // З'єднує слова назад у рядок
   }
+ 
 
-  let modifiedText = removeLastWord(context.params.id);
-
-
-  const product = await Product.findOne({'params.0.value': context.params.id});
-  const colors =await Product.find({'params.0.value': { $regex: modifiedText, $options: "i" } });
   
+
+
+  
+  const product = await Product.findOne({'params.0.value': context.params.id});
+  let modifiedText = removeLastWord(context.params.id, product.params[5]);
+  const colors =await Product.find({'params.0.value': { $regex: modifiedText, $options: "i" } });
   let fsd = context.params.id
   
   fsd.split('_').pop()
 
-  console.log('das',modifiedText);
+  
  
   let garantia = {name:'',value:''}
   
@@ -55,7 +61,7 @@ const CatalogItem = async (context:any) => {
               <div className='mt-10'>
                 <h2 className='text-[25px] font-medium'>Колір</h2>
                 <div className='flex gap-5 mt-5  flex-wrap'>
-                  {colors.map((color:any) =>(
+                  {colors?.map((color:any) =>(
                     <Link key={color.params[0].value} href={color.params[0].value} className='border-2 border-gray-700 rounded-lg p-1'><Image src={color.images[0]} width={80} height={80} alt='color'></Image></Link>
                   ))}
                 </div>
