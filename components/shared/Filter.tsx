@@ -21,8 +21,8 @@ import {
 import Link from 'next/link'
 
 
-const Filter = ({maxPrice, minPrice, maxMin, vendors, series, color, Type, category, categories}:{maxPrice:number,minPrice:number, maxMin:Array<number>, vendors:Array<string>, series:Array<string>, color:Array<string>, Type:Array<string>, category:any, categories:Array<string>}) => {
-    const {catalogData} = useAppContext();
+const Filter = ({maxPrice, searchParams, minPrice, maxMin, vendors, series, color, Type, category, categories}:{maxPrice:number,searchParams:any ,minPrice:number, maxMin:Array<number>, vendors:Array<string>, series:Array<string>, color:Array<string>, Type:Array<string>, category:any, categories:Array<string>}) => {
+    const {catalogData, setCatalogData} = useAppContext();
     const [filter, setFilter] = useState({
       price:[minPrice, maxPrice],
       width:[maxMin[1], maxMin[0]],
@@ -36,38 +36,15 @@ const Filter = ({maxPrice, minPrice, maxMin, vendors, series, color, Type, categ
     })
 
   
-
+    
 
     const router = useRouter()
 
     const [debounce] = useDebounce(filter,200)
-  
-    useEffect(()=>{
-        
-       router.push(`/catalog?${'page=1'}${catalogData.sort!=''?'&sort='+ catalogData.sort:''}${filter.color.length>0?'&color='+ filter.color:''}${filter.type.length>0?'&type='+ filter.type:''}${catalogData.search?'&search='+ catalogData.search:''}${filter.vendor.length>0?'&vendor='+filter.vendor:''}${filter.series.length>0?'&series='+filter.series:''}${filter.price[0]!=minPrice || filter.price[1]!=maxPrice ?'&minPrice='+ filter.price[0]+'&maxPrice='+ filter.price[1]:''}${filter.width[0]!= maxMin[1] || filter.width[1]!=maxMin[0] ?'&minWidth='+ filter.width[0]+'&maxWidth='+ filter.width[1]:''}${filter.height[0]!= maxMin[3] || filter.height[1]!=maxMin[2] ?'&minHeight='+ filter.height[0]+'&maxHeight='+ filter.height[1]:''}${filter.deep[0]!= maxMin[5] || filter.deep[1]!=maxMin[4] ?'&minDeep='+ filter.deep[0]+'&maxDeep='+ filter.deep[1]:''}${category?'&category='+category:''}
-       `      
-      ) 
-    },[debounce, catalogData.sort, catalogData.search, category]) 
-
-  useEffect(()=>{
-        
-   router.push(`/catalog?${'page='+ catalogData.pNumber}${catalogData.sort!=''?'&sort='+ catalogData.sort:''}${filter.color.length>0?'&color='+ filter.color:''}${filter.type.length>0?'&type='+ filter.type:''}${catalogData.search?'&search='+ catalogData.search:''}${filter.vendor.length>0?'&vendor='+filter.vendor:''}${filter.series.length>0?'&series='+filter.series:''}${filter.price[0]!=minPrice || filter.price[1]!=maxPrice ?'&minPrice='+ filter.price[0]+'&maxPrice='+ filter.price[1]:''}${filter.width[0]!= maxMin[1] || filter.width[1]!=maxMin[0] ?'&minWidth='+ filter.width[0]+'&maxWidth='+ filter.width[1]:''}${filter.height[0]!= maxMin[3] || filter.height[1]!=maxMin[2] ?'&minHeight='+ filter.height[0]+'&maxHeight='+ filter.height[1]:''}${filter.deep[0]!= maxMin[5] || filter.deep[1]!=maxMin[4] ?'&minDeep='+ filter.deep[0]+'&maxDeep='+ filter.deep[1]:''}${category?'&category='+category:''}
- 
-     `)
-  },[catalogData.pNumber])
-
     
-  useEffect(()=>{
-    setFilter({...filter, price:[minPrice, maxPrice],height:[maxMin[3], maxMin[2]],width:[maxMin[1], maxMin[0]],deep:[maxMin[5], maxMin[4]]});
-  },[category])
-
-   
-
-    const handleChange = (newValue: [number, number]) => {
-      setFilter({...filter, price:newValue})
-    };
-
+  
     const handleCheckboxChange = (v:any) => {
+      
       const selectedVendor = v; // Assuming the value of checkbox is the vendor name
       //@ts-ignore
       const isChecked = filter.vendor.includes(v);
@@ -87,12 +64,107 @@ const Filter = ({maxPrice, minPrice, maxMin, vendors, series, color, Type, categ
           };
         }
       });
+      setCatalogData({...catalogData, pNumber:1});
     };
+
+    useEffect(()=>{
+
+      if(searchParams.vendor){
+        setFilter((prevFilter:any) => ({
+          ...prevFilter,
+          vendor: [searchParams.vendor]
+        }));
+      }
+
+      if(searchParams.color){
+        setFilter((prevFilter:any) => ({
+          ...prevFilter,
+          color: [searchParams.color]
+        }));
+      }
+      if(searchParams.type){
+        setFilter((prevFilter:any) => ({
+          ...prevFilter,
+          type: [searchParams.type]
+        }));
+      }
+      if(searchParams.series){
+        setFilter((prevFilter:any) => ({
+          ...prevFilter,
+          series: [searchParams.series]
+        }));
+      }
+   
+      if(searchParams.maxWidth){
+         setFilter((prevFilter:any) => ({
+           ...prevFilter,
+           width: [searchParams.minWidth, searchParams.maxWidth]
+         }));
+       }
+
+      if(searchParams.maxPrice){
+        setFilter((prevFilter:any) => ({
+          ...prevFilter,
+          price: [searchParams.minPrice, searchParams.maxPrice]
+        }));
+      }
+
+      if(searchParams.maxHeight){
+        setFilter((prevFilter:any) => ({
+          ...prevFilter,
+          height: [searchParams.minHeight, searchParams.maxHeight]
+        }));
+      }
+
+      if(searchParams.maxDeep){
+        setFilter((prevFilter:any) => ({
+          ...prevFilter,
+          deep: [searchParams.minDeep, searchParams.maxDeep]
+        }));
+      }
+
+    },[])
+
+   
+    useEffect(()=>{
+      
+      
+      router.push(`/catalog?${'page='+ catalogData.pNumber}${catalogData.sort!=''?'&sort='+ catalogData.sort:''}${filter.color.length>0?'&color='+ filter.color:''}${filter.type.length>0?'&type='+ filter.type:''}${catalogData.search?'&search='+ catalogData.search:''}${filter.vendor.length>0?'&vendor='+filter.vendor:''}${filter.series.length>0?'&series='+filter.series:''}${filter.price[0]!=minPrice || filter.price[1]!=maxPrice ?'&minPrice='+ filter.price[0]+'&maxPrice='+ filter.price[1]:''}${filter.width[0]!= maxMin[1] || filter.width[1]!=maxMin[0] ?'&minWidth='+ filter.width[0]+'&maxWidth='+ filter.width[1]:''}${filter.height[0]!= maxMin[3] || filter.height[1]!=maxMin[2] ?'&minHeight='+ filter.height[0]+'&maxHeight='+ filter.height[1]:''}${filter.deep[0]!= maxMin[5] || filter.deep[1]!=maxMin[4] ?'&minDeep='+ filter.deep[0]+'&maxDeep='+ filter.deep[1]:''}${category?'&category='+category:''}
+      `      
+     ) 
+   },[debounce, catalogData.sort, catalogData.search, category,catalogData.pNumber]) 
+
+   
+  
+
+  // useEffect(()=>{
+        
+  //  router.push(`/catalog?${'page='+ catalogData.pNumber}${catalogData.sort!=''?'&sort='+ catalogData.sort:''}${filter.color.length>0?'&color='+ filter.color:''}${filter.type.length>0?'&type='+ filter.type:''}${catalogData.search?'&search='+ catalogData.search:''}${filter.vendor.length>0?'&vendor='+filter.vendor:''}${filter.series.length>0?'&series='+filter.series:''}${filter.price[0]!=minPrice || filter.price[1]!=maxPrice ?'&minPrice='+ filter.price[0]+'&maxPrice='+ filter.price[1]:''}${filter.width[0]!= maxMin[1] || filter.width[1]!=maxMin[0] ?'&minWidth='+ filter.width[0]+'&maxWidth='+ filter.width[1]:''}${filter.height[0]!= maxMin[3] || filter.height[1]!=maxMin[2] ?'&minHeight='+ filter.height[0]+'&maxHeight='+ filter.height[1]:''}${filter.deep[0]!= maxMin[5] || filter.deep[1]!=maxMin[4] ?'&minDeep='+ filter.deep[0]+'&maxDeep='+ filter.deep[1]:''}${category?'&category='+category:''}
+ 
+  //    `)
+  // },[catalogData.pNumber])
+
+    
+  // useEffect(()=>{
+  //   setFilter({...filter, price:[minPrice, maxPrice],height:[maxMin[3], maxMin[2]],width:[maxMin[1], maxMin[0]],deep:[maxMin[5], maxMin[4]]});
+  // },[category])
+
+   
+
+    const handleChange = (newValue: [number, number]) => {
+      setFilter({...filter, price:newValue})
+      setCatalogData({...catalogData, pNumber:1});
+    };
+
+
+
+
+   
 
     const handleSeries = (v:any) => {
       const selectedSeria = v; 
       //@ts-ignore
-      const isChecked = filter.series.includes(v);
+      const isChecked = filter.series?.includes(v);
   
       setFilter((prevFilter):any => {
         if (!isChecked) {
@@ -107,12 +179,13 @@ const Filter = ({maxPrice, minPrice, maxMin, vendors, series, color, Type, categ
           };
         }
       });
+      setCatalogData({...catalogData, pNumber:1});
     };
 
     const handleColor = (v:any) => {
       const selectedColor = v; 
       //@ts-ignore
-      const isChecked = filter.color.includes(v);
+      const isChecked = filter.color?.includes(v);
   
       setFilter((prevFilter):any => {
         if (!isChecked) {
@@ -127,12 +200,13 @@ const Filter = ({maxPrice, minPrice, maxMin, vendors, series, color, Type, categ
           };
         }
       });
+      setCatalogData({...catalogData, pNumber:1});
     };
 
     const handleType = (v:any) => {
       const selectedType = v; 
       //@ts-ignore
-      const isChecked = filter.type.includes(v);
+      const isChecked = filter.type?.includes(v);
   
       setFilter((prevFilter):any => {
         if (!isChecked) {
@@ -147,6 +221,7 @@ const Filter = ({maxPrice, minPrice, maxMin, vendors, series, color, Type, categ
           };
         }
       });
+      setCatalogData({...catalogData, pNumber:1});
     };
   const divRef = useRef(null);
   const [bodyOverflow, setBodyOverflow] = useState(false);
@@ -170,6 +245,9 @@ const Filter = ({maxPrice, minPrice, maxMin, vendors, series, color, Type, categ
     }
     setBodyOverflow(!bodyOverflow);
   };
+
+ 
+
 
 
   // useEffect(()=>{
@@ -203,7 +281,8 @@ const Filter = ({maxPrice, minPrice, maxMin, vendors, series, color, Type, categ
                 <h3 className='text-[23px]'>Виробник</h3>
                   {vendors.map((v)=>(
                     <div className="flex items-center space-x-2 mt-4" key={v}>
-                      <Checkbox id={v} onCheckedChange={(e)=>handleCheckboxChange(v)} />
+                      {searchParams.vendor?.includes(v)?<Checkbox id={v} onCheckedChange={(e)=>handleCheckboxChange(v)} checked />:<Checkbox id={v} onCheckedChange={(e)=>handleCheckboxChange(v)} />}
+                      
                       <label
                         htmlFor={v}
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -222,10 +301,10 @@ const Filter = ({maxPrice, minPrice, maxMin, vendors, series, color, Type, categ
                 <AccordionItem value="item-1">
                   <AccordionTrigger className='text-[20px]'>Категорія</AccordionTrigger>
                   <AccordionContent>
-                    <Link href='/catalog?category=' className='hover:underline max-lg:underline'>Всі категорії</Link>
+                    <a href='/catalog?category=' className='hover:underline max-lg:underline' >Всі категорії</a>
                     {categories.map((t)=>(
                       <div className="flex items-center space-x-2 mt-4" key={t}>
-                        <Link  href={'/catalog?category='+t.replace(/ /g, '_')} className='hover:underline max-lg:underline'>{t}</Link>
+                        <a  href={'/catalog?category='+t.replace(/ /g, '_')} className='hover:underline max-lg:underline'>{t}</a>
                       </div>
                     ))}
                   </AccordionContent>
@@ -246,7 +325,8 @@ const Filter = ({maxPrice, minPrice, maxMin, vendors, series, color, Type, categ
                   <AccordionContent>
                     {Type.map((t)=>(
                       <div className="flex items-center space-x-2 mt-4" key={t}>
-                      <Checkbox id={t} onCheckedChange={()=>handleType(t)} />
+                        {searchParams.type?.includes(t)?<Checkbox id={t} onCheckedChange={()=>handleType(t)} checked/>:<Checkbox id={t} onCheckedChange={()=>handleType(t)} />}
+                      
                       <label
                         htmlFor={t}
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -267,7 +347,7 @@ const Filter = ({maxPrice, minPrice, maxMin, vendors, series, color, Type, categ
                   <AccordionContent>
                     {series.map((s)=>(
                       <div className="flex items-center space-x-2 mt-4" key={s}>
-                      <Checkbox id={s} onCheckedChange={()=>handleSeries(s)} />
+                      {searchParams.series?.includes(s)?<Checkbox id={s} onCheckedChange={()=>handleSeries(s)} checked />:<Checkbox id={s} onCheckedChange={()=>handleSeries(s)} />}
                       <label
                         htmlFor={s}
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -288,7 +368,7 @@ const Filter = ({maxPrice, minPrice, maxMin, vendors, series, color, Type, categ
                   <AccordionContent>
                     {color.map((c)=>(
                       <div className="flex items-center space-x-2 mt-4" key={c}>
-                      <Checkbox id={c} onCheckedChange={()=>handleColor(c)} />
+                      {searchParams.color?.includes(c)?<Checkbox id={c} onCheckedChange={()=>handleColor(c)} checked />:<Checkbox id={c} onCheckedChange={()=>handleColor(c)} />}
                       <label
                         htmlFor={c}
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -383,6 +463,7 @@ const Filter = ({maxPrice, minPrice, maxMin, vendors, series, color, Type, categ
                   </label>
                 </div>
             </div> */}
+     
             </div>
         </div></>
   )

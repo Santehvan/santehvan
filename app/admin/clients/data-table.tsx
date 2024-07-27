@@ -41,7 +41,8 @@ import {
 } from "@/components/ui/table"
 import { proceedDataToDB } from "@/lib/proceedDataToDB"
 import Image from "next/image"
-
+import { findMaxId } from "@/lib/actions/value.actions"
+import { useRouter } from "next/navigation"
 
 export type Product = {
   id: string | null,
@@ -80,7 +81,7 @@ export function DataTable<TData extends Product, TValue>({
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
 
-  const [proceedingState, setProceedingState] = React.useState("Зберегти");
+  const router = useRouter();
 
   const table = useReactTable({
     data,
@@ -101,75 +102,16 @@ export function DataTable<TData extends Product, TValue>({
     },
   })
 
-  let isProceedDisabled = true;
-
-  if(table.getIsAllRowsSelected()){
-    isProceedDisabled = false;
-  } else if(table.getIsSomeRowsSelected()){
-    isProceedDisabled = false;
-  } else {
-    isProceedDisabled = true;
-  }
-
-  const handleProceed = async (data: Product[]) => {
-    setProceedingState("Збереження");
-  
-    try {
-      const allSelectedRowsIds = table.getSelectedRowModel().rows.map(row => row.original.id);
-  
-      await proceedDataToDB(data, allSelectedRowsIds);
-    } finally {
-      setProceedingState("Збережено");
-  
-      setTimeout(() => {
-        setProceedingState("Зберегти")
-      }, 2000)
-
-
-   
-    }
-  }
-
-  
-
-
-
   return (
-    <div className="w-full">
+    <div className="w-full mt-7">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Назва товару..."
-          value={(table.getColumn("name")?.getFilterValue() as string | undefined) ?? ""}
+          placeholder="Email..."
+          value={(table.getColumn("email")?.getFilterValue() as string | undefined) ?? ""}
           onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
+            table.getColumn("email")?.setFilterValue(event.target.value)
           }
         />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Стовпці <ChevronDownIcon className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="bg-white">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.columnDef.header?.toString().replace(/[^А-ЩЬ-ЯҐЄІЇа-щь-яґєії\s]/g, '')} 
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
       <div className="rounded-md border">
         <Table>
@@ -197,7 +139,8 @@ export function DataTable<TData extends Product, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className="hover:bg-slate-50 transition-all"
+                  onClick={() => router.push(`/admin/clients/${row.original._id}`)}
+                  className="cursor-pointer hover:bg-slate-50 transition-all"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -224,8 +167,6 @@ export function DataTable<TData extends Product, TValue>({
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} з{" "}
-          {table.getFilteredRowModel().rows.length} товарів вибрано
         </div>
         <div className="space-x-2">
           <Button
@@ -243,16 +184,6 @@ export function DataTable<TData extends Product, TValue>({
             disabled={!table.getCanNextPage()}
           >
             Наступна
-          </Button>
-          <Button
-            variant="default"
-            size="sm"
-            onClick={() => handleProceed(data)}
-            disabled={isProceedDisabled}
-            className="bg-green-500 hover:bg-green-400"
-          >
-            {proceedingState}
-            {proceedingState === "Збереження" ? <Image height={24} width={24} src="/assets/spinner.svg" alt="Loading"/> : proceedingState === "Збережено" ? <Image height={24} width={24} src="/assets/success.svg" alt="Loading" className="ml-1"/> : <Image height={24} width={24} src="/assets/arrow-right-circle.svg" alt="Loading" className="ml-1"/>}
           </Button>
         </div>
       </div>

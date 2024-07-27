@@ -11,18 +11,33 @@ import {
   } from "@/components/ui/pagination"
 import { useAppContext } from "@/app/(root)/context"
 import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 
 const PaginationForCatalog = ({searchParams, countOfPages,}:{searchParams:any, countOfPages:number}) => {
     const router = useRouter();
    
+    const {catalogData, setCatalogData} = useAppContext();
+
+  useEffect(()=>{
+
+    console.log(searchParams.page)
+    if(searchParams.page){
+      console.log('fsd')
+      setCatalogData({...catalogData, pNumber:searchParams.page});
+    }else{
+      setCatalogData({...catalogData, pNumber:1});
+    }
+    
+  },[])
+
+    
+
     const pageNumber:number = searchParams.page
 
     const setPage = (number:number)=>{
        setCatalogData({...catalogData, pNumber:number});
        
     }
-
-    const {catalogData, setCatalogData} = useAppContext();
 
    
     
@@ -49,7 +64,7 @@ const PaginationForCatalog = ({searchParams, countOfPages,}:{searchParams:any, c
         
         {searchParams.page <4?<></>:<>
         <PaginationItem>
-        <PaginationLink onClick={()=>setPage(searchParams.page - 1)}>
+        <PaginationLink onClick={()=>setPage(searchParams.page - 2)}>
           {searchParams.page - 2}
         </PaginationLink>
         </PaginationItem>
