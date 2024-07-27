@@ -14,7 +14,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Santehvan shop",
-  description: "Your's best bathroom advisor",
+  description: "Інтернет-магазин сантехніки та меблів: широкий вибір якісних товарів для ванної кімнати, кухні та дому. Безкоштовна доставка, вигідні ціни та акції. Оновіть свій інтер'єр з нами!",
 };
 
 export default function RootLayout({
