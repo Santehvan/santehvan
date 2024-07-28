@@ -6,6 +6,7 @@ import Product from '@/lib/models/product.model'
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import AddToCart from '@/components/shared/AddToCart';
 
 
 const CatalogItem = async (context:any) => {
@@ -71,7 +72,7 @@ const CatalogItem = async (context:any) => {
                 <p className=" text-[30px]">₴{product.priceToShow}</p>
               </div>
               <div className='flex gap-5 mt-10 max-sm:flex-col'>
-                <div className='flex'><Button className='w-[195px]'>Додати до кошика</Button></div>
+                <div className='flex'><AddToCart id={product.id} image={product.images[0]} name={product.name} price={product.priceToShow} /></div>
                 <div className='flex'><Link href='/catalog'><Button variant='outline'>Повернутися до покупок</Button></Link></div>
               </div>
             </div>

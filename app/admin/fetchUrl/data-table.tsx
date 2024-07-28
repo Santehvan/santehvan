@@ -41,7 +41,7 @@ import {
 } from "@/components/ui/table"
 import { proceedDataToDB } from "@/lib/proceedDataToDB"
 import Image from "next/image"
-import { findMaxId } from "@/lib/actions/value.actions"
+
 
 export type Product = {
   id: string | null,
@@ -126,7 +126,7 @@ export function DataTable<TData extends Product, TValue>({
       }, 2000)
 
 
-      await findMaxId();
+   
     }
   }
 
@@ -197,6 +197,7 @@ export function DataTable<TData extends Product, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  className="hover:bg-slate-50 transition-all"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

@@ -123,12 +123,22 @@ const catalog = async ({searchParams,data}:any) => {
     filtredProducts =filtredProducts.filter(obj => searchParams.vendor?.includes(obj.vendor))
   } 
   
-  const color = Array.from(new Set (filtredProducts.map(item => item.params[5]?.value))).filter(function(item) {return item !== '';});
-  const series = Array.from(new Set (filtredProducts.map(item => item.params[0].value.split('_')[0].split('-')[0]))).filter(function(item) {return item !== '';});
-  const Type = Array.from(new Set (filtredProducts.map(item => item.params[4]?.value))).filter(function(item) {return item !== '';});
+  const color = Array.from(new Set(
+    filtredProducts
+        .filter(item => item.params[5]?.name === 'Колір') // Filter items where params[5].name is 'Колір'
+        .map(item => item.params[5]?.value) // Map to params[5].value
+  )).filter(function(item) {
+      return item !== ''; // Filter out empty values
+  });
+  const series = Array.from(new Set (filtredProducts
+    .filter(item => item.params[0]?.name === 'Товар')
+    .map(item => item.params[0].value.split('_')[0].split('-')[0]))).filter(function(item) {return item !== '';});
+  const Type = Array.from(new Set (filtredProducts
+    .filter(item => item.params[4]?.name === 'Вид')
+    .map(item => item.params[4]?.value))).filter(function(item) {return item !== '';});
 
   if(searchParams.series){
-    filtredProducts =filtredProducts.filter(obj => searchParams.series?.includes(obj.params[0]?.value))
+    filtredProducts =filtredProducts.filter(obj => searchParams.series?.includes(obj.params[0]?.value.split('_')[0].split('-')[0]))
   }
 
   if(searchParams.color){
@@ -159,7 +169,7 @@ const catalog = async ({searchParams,data}:any) => {
   return (
     <section className='flex'>
         
-        <Filter categories={category} category={searchParams.category} minPrice={minPrice} maxPrice={maxPrice} maxMin={maxMinRes} vendors={vendors} series={series} color={color} Type={Type}/>
+        <Filter categories={category} searchParams={searchParams} category={searchParams.category} minPrice={minPrice} maxPrice={maxPrice} maxMin={maxMinRes} vendors={vendors} series={series} color={color} Type={Type}/>
         <div className='w-full'>
           <div className='flex w-4/5 max-md:w-full ml-auto justify-between'>
             <Search searchParams={searchParams} />

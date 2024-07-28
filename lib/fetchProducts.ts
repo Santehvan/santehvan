@@ -105,7 +105,6 @@ export default async function xmlParse(xmlString: string){
                     heightParam = { name: paramName, value: paramValue };
                 }else if(paramName === "Артикул"){
                     let first = paramValue?.replace(/ /g, '_');
-
                     modelParam = { name: "Товар", value: first };
                   
                 }else if(paramName === "Глибина, см"){

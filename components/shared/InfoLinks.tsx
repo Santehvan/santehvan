@@ -76,7 +76,7 @@ const ListItem = React.forwardRef<
 >(({ className, title, children, ...props }, ref) => {
   return (
     <li>
-      <NavigationMenuLink asChild>
+
        <TransitionLink 
       
           //@ts-ignore
@@ -92,7 +92,6 @@ const ListItem = React.forwardRef<
             {children}
           </p>
      </TransitionLink>
-      </NavigationMenuLink>
     </li>
   )
 })
