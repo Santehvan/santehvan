@@ -9,8 +9,8 @@ import { NextAuthOptions } from "next-auth";
 export const options: NextAuthOptions = {
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLEPROVIDER_CLIENTID as string,
-      clientSecret: process.env.GOOGLEPROVIDER_CLIENTSECRET ? process.env.GOOGLEPROVIDER_CLIENTSECRET : '',
+      clientId: '772110068140-kpr1eqca440almtu4ngpa5le72ipobro.apps.googleusercontent.com',
+      clientSecret: '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',
     }),
     CredentialsProvider({
       name: "credentials",
