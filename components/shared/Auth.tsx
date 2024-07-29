@@ -45,10 +45,10 @@ const Auth = ({email,user}:any) => {
         <p className="py-5 px-2  "><Link href='/presentations' className="Underline" onClick={handleRouteChange}>Презентації</Link></p>
         <p className="py-5 px-2  "><Link href='/catalog' className="Underline" onClick={handleRouteChange}>Каталог</Link></p>
         <p className="py-5 px-2  "><Link href='/contacts' className="Underline" onClick={handleRouteChange}>Контакти</Link></p>
-        <p className="py-5 px-2  ">{email &&<Link href='/myOrders' className="Underline" onClick={handleRouteChange}>Мої замовлення</Link>}</p>
+        {email &&<p className="py-5 px-2  "><Link href='/myOrders' className="Underline" onClick={handleRouteChange}>Мої замовлення</Link></p>}
         <p className="py-5 px-2 "><Link href='/delivery-payment' className="Underline" onClick={handleRouteChange}>Доставка та оплата</Link></p>
         <p className="py-5 px-2 "><Link href='/warranty-services' className="Underline" onClick={handleRouteChange}>Гарантія та сервіси</Link></p>
-        <p className="py-5 px-2 ">{email && <Link  href={`/liked/${user._id}`} className="Underline" onClick={handleRouteChange}>Уподобані</Link>}</p>
+        {email &&<p className="py-5 px-2 "><Link  href={`/liked/${user._id}`} className="Underline" onClick={handleRouteChange}>Уподобані</Link></p>}
         {/* {email && <Link href={`/liked/${user._id}`} className="Underline">Уподобані</Link>} */}
     </div>
     </>
