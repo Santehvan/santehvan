@@ -18,7 +18,7 @@ export const sendEmail = async({email, emailType, userId}:any) => {
 
        var transport = nodemailer.createTransport({
           host: "live.smtp.mailtrap.io",
-          port: 2525,
+          port: 587,
           auth: {
             user: "api",
             pass: "3a37c2d40a132e125065bef93fb2207d"
@@ -26,7 +26,7 @@ export const sendEmail = async({email, emailType, userId}:any) => {
         });
 
         const mailOptions = {
-            from: 'santehvan.com',
+            from: 'santehvan@gmail.com',
             to: email,
             subject: emailType === "VERIFY" ? "Лист підтвердження" : "Зміна пароля",
             text:emailType === "VERIFY" ?
