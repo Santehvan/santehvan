@@ -16,15 +16,14 @@ export const sendEmail = async({email, emailType, userId}:any) => {
                 {forgotPasswordToken: hashedToken, forgotPasswordTokenExpiry: Date.now() + 3600000})
         }
 
-        var transport = nodemailer.createTransport({
-            host: "sandbox.smtp.mailtrap.io",
-            port: 2525,
-            auth: {
-              user: "16b51dc2e5ef04",
-              pass: "0544113220a38e"
-              // pass this to env
-            }
-          });
+       var transport = nodemailer.createTransport({
+          host: "sandbox.smtp.mailtrap.io",
+          port: 2525,
+          auth: {
+            user: "96c88abbde7d77",
+            pass: "61b589c98167b2"
+          }
+        });
 
         const mailOptions = {
             from: 'coppergroupstudio@gmail.com',
