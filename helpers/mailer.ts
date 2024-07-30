@@ -6,15 +6,9 @@ import { useToast } from "@/components/ui/use-toast"
 export const sendEmail = async({email, emailType, userId}:any) => {
     try {
         // create a hased token
-        const hashedToken = await bcryptjs.hash(userId.toString(), 10)
+       
 
-        if (emailType === "VERIFY") {
-            await User.findByIdAndUpdate(userId, 
-                {verifyToken: hashedToken, verifyTokenExpiry: Date.now() + 3600000})
-        } else if (emailType === "RESET"){
-            await User.findByIdAndUpdate(userId, 
-                {forgotPasswordToken: hashedToken, forgotPasswordTokenExpiry: Date.now() + 3600000})
-        }
+       
 
        var transport = nodemailer.createTransport({
           host: "live.smtp.mailtrap.io",
@@ -45,7 +39,7 @@ export const sendEmail = async({email, emailType, userId}:any) => {
 `
 
 ,
-            html: `<a style="color:#fff; background-color:#000; padding:5px 15px; border-radius:10px" href="${process.env.DOMAIN}/${emailType === "VERIFY" ? `verifyemail?token=${hashedToken}` : `newPass?token=${hashedToken}`}";>Підтвердити</a>`
+            html: ``
         }
 //
         const mailresponse = await transport.sendMail
