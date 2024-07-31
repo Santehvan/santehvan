@@ -17,14 +17,13 @@ export const sendEmail = async({email, emailType, userId}:any) => {
         }
 
         var transport = nodemailer.createTransport({
-            host: "sandbox.smtp.mailtrap.io",
-            port: 2525,
-            auth: {
-              user: "16b51dc2e5ef04",
-              pass: "0544113220a38e"
-              // pass this to env
-            }
-          });
+          host: "live.smtp.mailtrap.io",
+          port: 587,
+          auth: {
+            user: "api",
+            pass: "3a37c2d40a132e125065bef93fb2207d"
+          }
+        });
 
         const mailOptions = {
             from: 'coppergroupstudio@gmail.com',
