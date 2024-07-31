@@ -26,7 +26,7 @@ export const sendEmail = async({email, emailType, userId}:any) => {
         });
 
         const mailOptions = {
-            from: 'coppergroupstudio@gmail.com',
+            from: 'santehvan@gmail.com',
             to: email,
             subject: emailType === "VERIFY" ? "Лист підтвердження" : "Зміна пароля",
             text:emailType === "VERIFY" ?
