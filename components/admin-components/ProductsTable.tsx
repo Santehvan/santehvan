@@ -117,7 +117,7 @@ const ProductsTable =  ({stringifiedProducts}:{stringifiedProducts:string}) => {
         <Table className="mt-5">
         <TableHeader>
           <TableRow>
-            <TableHead >Номер</TableHead>
+            <TableHead>ID</TableHead>
             <TableHead>Постачальник</TableHead>
             <TableHead>Назва</TableHead>
             <TableHead>Доступний</TableHead>

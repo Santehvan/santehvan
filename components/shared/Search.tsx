@@ -42,19 +42,18 @@ const Search = ({searchParams}:any) => {
 
   return (<>
     <div className='w-3/5 flex mr-5 max-md:text-black '><Input type='text' onChange={textFromInput}  placeholder='Пошук товару' /></div>
-    <Select onValueChange={(element)=>setSort(element)} >
-              <SelectTrigger className="w-[240px]">
-                <SelectValue placeholder="Звичайне" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="default" >Звичайне</SelectItem>
-                  <SelectItem value="low_price" >Ціна(низька)</SelectItem>
-                  <SelectItem value="hight_price">Ціна(Висока)</SelectItem>
-                  
-                </SelectGroup>
-              </SelectContent>
-            </Select></>
+        <Select onValueChange={(element)=>setSort(element)} aria-label="Sort Options">
+          <SelectTrigger className="w-[240px]" aria-label="Sort Selector">
+            <SelectValue placeholder="Звичайне" aria-label="Aria Selected" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="default" aria-label="Default">Звичайне</SelectItem>
+              <SelectItem value="low_price" aria-label="Low Price">Ціна(низька)</SelectItem>
+              <SelectItem value="high_price" aria-label="High Price">Ціна(Висока)</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select></>
   )
 }
 

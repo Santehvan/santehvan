@@ -23,17 +23,25 @@ import Link from 'next/link'
 
 const Filter = ({maxPrice, searchParams, minPrice, maxMin, vendors, series, color, Type, category, categories}:{maxPrice:number,searchParams:any ,minPrice:number, maxMin:Array<number>, vendors:Array<string>, series:Array<string>, color:Array<string>, Type:Array<string>, category:any, categories:Array<string>}) => {
     const {catalogData, setCatalogData} = useAppContext();
-    const [filter, setFilter] = useState({
-      price:[minPrice, maxPrice],
-      width:[maxMin[1], maxMin[0]],
-      height:[maxMin[3], maxMin[2]],
-      deep:[maxMin[5], maxMin[4]],
-      vendor:[],
-      series:[],
-      color:[],
-      type:[]
-     
-    })
+    const [filter, setFilter] = useState<{
+      price: [number, number],
+      width: [number, number],
+      height: [number, number],
+      deep: [number, number],
+      vendor: string[],  // Визначаємо тип для vendor як масив рядків
+      series: string[],
+      color: string[],
+      type: string[]
+    }>({
+      price: [minPrice, maxPrice],
+      width: [maxMin[1], maxMin[0]],
+      height: [maxMin[3], maxMin[2]],
+      deep: [maxMin[5], maxMin[4]],
+      vendor: [],
+      series: [],
+      color: [],
+      type: []
+    });
 
   
     
@@ -258,7 +266,7 @@ const Filter = ({maxPrice, searchParams, minPrice, maxMin, vendors, series, colo
 
   return (
     <>
-    <Button onClick={(e)=>toggleOverflow(e)} className="fixed duration-300 left-0 top-36 rounded-none rounded-r md:hidden transition-all"><i className="fa fa-filter pointer-events-none"></i></Button>
+    <Button onClick={(e)=>toggleOverflow(e)} name="filter" aria-label="Aria Filter" className="fixed duration-300 left-0 top-36 rounded-none rounded-r md:hidden transition-all"><i className="fa fa-filter pointer-events-none"></i></Button>
     <div ref={divRef} className='transition-all duration-300 w-[300px] border-r-2 border-gray-700 max-md:w-[270px]  max-md:fixed max-md:bg-white  max-md:flex max-md:flex-col justify-center z-50 items-center max-md:overflow-y-scroll overflow-x-hidden max-md:h-full  max-md:translate-x-[-100%] top-0  left-0 ' >
       <div className='h-full max-md:w-[300px] max-md:pl-10 pt-10 '>
             <h2 className='text-[28px]'>{category?category.replace(/_/g, ' '):'Фільтр'}</h2>
@@ -281,7 +289,7 @@ const Filter = ({maxPrice, searchParams, minPrice, maxMin, vendors, series, colo
                 <h3 className='text-[23px]'>Виробник</h3>
                   {vendors.map((v)=>(
                     <div className="flex items-center space-x-2 mt-4" key={v}>
-                      {searchParams.vendor?.includes(v)?<Checkbox id={v} onCheckedChange={(e)=>handleCheckboxChange(v)} checked />:<Checkbox id={v} onCheckedChange={(e)=>handleCheckboxChange(v)} />}
+                     <Checkbox aria-label={'Aria Vendor '+ v} id={v} onCheckedChange={(e)=>handleCheckboxChange(v)} checked={filter.vendor.includes(v)} />
                       
                       <label
                         htmlFor={v}
@@ -298,8 +306,8 @@ const Filter = ({maxPrice, searchParams, minPrice, maxMin, vendors, series, colo
 
             <div className='mt-4 pb-4 w-[90%] border-dashed '>
               <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="item-1">
-                  <AccordionTrigger className='text-[20px]'>Категорія</AccordionTrigger>
+                <AccordionItem value="item-1" >
+                  <AccordionTrigger aria-label="Aria Categories" name="Categories" className='text-[20px]'>Категорія</AccordionTrigger>
                   <AccordionContent>
                     <a href='/catalog?category=' className='hover:underline max-lg:underline' >Всі категорії</a>
                     {categories.map((t)=>(
@@ -325,7 +333,7 @@ const Filter = ({maxPrice, searchParams, minPrice, maxMin, vendors, series, colo
                   <AccordionContent>
                     {Type.map((t)=>(
                       <div className="flex items-center space-x-2 mt-4" key={t}>
-                        {searchParams.type?.includes(t)?<Checkbox id={t} onCheckedChange={()=>handleType(t)} checked/>:<Checkbox id={t} onCheckedChange={()=>handleType(t)} />}
+                        <Checkbox  id={t} onCheckedChange={(e)=>handleCheckboxChange(t)} checked={filter.type.includes(t)} />
                       
                       <label
                         htmlFor={t}
@@ -347,7 +355,7 @@ const Filter = ({maxPrice, searchParams, minPrice, maxMin, vendors, series, colo
                   <AccordionContent>
                     {series.map((s)=>(
                       <div className="flex items-center space-x-2 mt-4" key={s}>
-                      {searchParams.series?.includes(s)?<Checkbox id={s} onCheckedChange={()=>handleSeries(s)} checked />:<Checkbox id={s} onCheckedChange={()=>handleSeries(s)} />}
+                      <Checkbox id={s} onCheckedChange={(e)=>handleCheckboxChange(s)} checked={filter.series.includes(s)} />
                       <label
                         htmlFor={s}
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -368,7 +376,7 @@ const Filter = ({maxPrice, searchParams, minPrice, maxMin, vendors, series, colo
                   <AccordionContent>
                     {color.map((c)=>(
                       <div className="flex items-center space-x-2 mt-4" key={c}>
-                      {searchParams.color?.includes(c)?<Checkbox id={c} onCheckedChange={()=>handleColor(c)} checked />:<Checkbox id={c} onCheckedChange={()=>handleColor(c)} />}
+                      <Checkbox  id={c} onCheckedChange={(e)=>handleCheckboxChange(c)} checked={filter.color.includes(c)} />
                       <label
                         htmlFor={c}
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -424,45 +432,6 @@ const Filter = ({maxPrice, searchParams, minPrice, maxMin, vendors, series, colo
                     <div className='w-20 h-8 border flex items-center justify-center'>{filter.deep[1]}</div>
                   </div>
             </div>
-            {/* <div className='mt-4 border-b-2 pb-4 w-[90%] border-dashed '>
-                <h3 className='text-[23px]'>Акції</h3>
-                <div className="flex items-center space-x-2 mt-4">
-                  <Checkbox id="5%"></Checkbox>
-                  <label
-                    htmlFor="5%"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Знижка 5%
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2 mt-4">
-                  <Checkbox id="10%" />
-                  <label
-                    htmlFor="10%"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Знижка 10%
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2 mt-4">
-                  <Checkbox id="15%" />
-                  <label
-                    htmlFor="15%"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Знижка 15%
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2 mt-4">
-                  <Checkbox id="20%" />
-                  <label
-                    htmlFor="20%"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Знижка 20%
-                  </label>
-                </div>
-            </div> */}
      
             </div>
         </div></>

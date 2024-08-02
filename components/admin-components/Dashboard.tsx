@@ -3,7 +3,7 @@
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "../ui/chart"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel"
 import Link from "next/link"
@@ -134,7 +134,7 @@ const Dashboard = ({ stringifiedData }: { stringifiedData: string }) => {
           </div>
           <div className="w-1/2 flex justify-end gap-7">
             <Select onValueChange={(element) => selectTimePeriod(element)} defaultValue="day">
-              <SelectTrigger className="w-1/4 mb-3 border-0 border-b-2 border-black rounded-none font-semibold px-1 focus:ring-0">
+              <SelectTrigger className="w-1/4 mb-3 border-0 border-b-2 border-black rounded-none font-semibold px-1 focus:ring-0 max-[1283px]:w-1/3 max-[1080px]:w-2/5">
                 <SelectValue placeholder="Time period"/>
               </SelectTrigger>
               <SelectContent>
@@ -147,7 +147,7 @@ const Dashboard = ({ stringifiedData }: { stringifiedData: string }) => {
               </SelectContent>
             </Select>
             <Select onValueChange={(element) => setPreviewMode(element)} defaultValue="Percentage">
-              <SelectTrigger className="w-1/5 mb-3 border-0 border-b-2 border-black rounded-none font-semibold px-1 focus:ring-0">
+              <SelectTrigger className="w-1/5 mb-3 border-0 border-b-2 border-black rounded-none font-semibold px-1 focus:ring-0 max-[1283px]:w-1/4 max-[1130px]:w-2/5">
                 <SelectValue placeholder="Preview mode"/>
               </SelectTrigger>
               <SelectContent>
@@ -180,9 +180,7 @@ const Dashboard = ({ stringifiedData }: { stringifiedData: string }) => {
                 />
                 <ChartTooltip
                   content={
-                    <ChartTooltipContent
-                      className="w-[150px]"
-                    />
+                    <CustomTooltip timePeriod={timePeriod} />
                   }
                 />
                 <Bar dataKey="totalOrders" fill="var(--color-desktop)" radius={[36, 36, 0, 0]}/>
@@ -193,9 +191,9 @@ const Dashboard = ({ stringifiedData }: { stringifiedData: string }) => {
         <div className="w-full h-1/3 border-red-500 mt-5">
           <Carousel className="w-full h-full border-green-500">
             <CarouselContent className="pr-5">
-              <CarouselItem className="basis-1/3 flex justify-center items-center border-violet-500 cursor-grab focus:cursor-grabbing">
+              <CarouselItem className="basis-1/3 flex justify-center items-center border-violet-500 cursor-grab active:cursor-grabbing max-[1352px]:basis-2/5 max-[1216px]:basis-1/2">
                   <article className="w-full h-40 text-white shadow-xl rounded-2xl gradient-1 border-orange-500 py-4 px-4">
-                    <div className="w-full h-2/5 flex justify-between items-end border-indigo-500 px-2">
+                    <div className="w-full h-2/5 flex justify-between items-end border-indigo-500 px-2 max-[1352px]:items-start max-[1352px]:mt-3">
                       <p className="text-body-semibold">Всього замовлень</p>
                       <Image
                         src="/assets/arrow-right-up-white.svg"
@@ -224,9 +222,9 @@ const Dashboard = ({ stringifiedData }: { stringifiedData: string }) => {
                     </div>
                   </article>
               </CarouselItem>
-              <CarouselItem className="basis-1/3 h-64 flex justify-center items-center border-violet-500 cursor-grab focus:cursor-grabbing">
+              <CarouselItem className="basis-1/3 h-64 flex justify-center items-center border-violet-500 cursor-grab active:cursor-grabbing max-[1352px]:basis-2/5 max-[1216px]:basis-1/2">
                   <article className="w-full h-40 shadow-xl rounded-2xl border py-4 px-4">
-                    <div className="w-full h-2/5 flex justify-between items-end border-indigo-500 px-2">
+                    <div className="w-full h-2/5 flex justify-between items-end border-indigo-500 px-2 max-[1352px]:items-start max-[1352px]:mt-3">
                       <p className="text-body-semibold">Всього продано продукції</p>
                       <Image
                         src="/assets/arrow-right-up.svg"
@@ -255,9 +253,9 @@ const Dashboard = ({ stringifiedData }: { stringifiedData: string }) => {
                     </div>
                   </article>
               </CarouselItem>
-              <CarouselItem className="basis-1/3 h-64 flex justify-center items-center border-violet-500 cursor-grab focus:cursor-grabbing">
+              <CarouselItem className="basis-1/3 h-64 flex justify-center items-center border-violet-500 cursor-grab active:cursor-grabbing max-[1352px]:basis-2/5 max-[1216px]:basis-1/2">
                   <article className="w-full h-40 shadow-xl rounded-2xl border py-4 px-4">
-                    <div className="w-full h-2/5 flex justify-between items-end border-indigo-500 px-2">
+                    <div className="w-full h-2/5 flex justify-between items-end border-indigo-500 px-2 max-[1352px]:items-start max-[1352px]:mt-3">
                       <p className="text-body-semibold">Середня ціна замовлення</p>
                       <Image
                         src="/assets/arrow-right-up.svg"
@@ -286,9 +284,9 @@ const Dashboard = ({ stringifiedData }: { stringifiedData: string }) => {
                     </div>
                   </article>
               </CarouselItem>
-              <CarouselItem className="basis-1/3 h-64 flex justify-center items-center border-violet-500 cursor-grab focus:cursor-grabbing">
+              <CarouselItem className="basis-1/3 h-64 flex justify-center items-center border-violet-500 cursor-grab active:cursor-grabbing max-[1352px]:basis-2/5 max-[1216px]:basis-1/2">
                   <article className="w-full h-40 shadow-2xl rounded-2xl border py-4 px-4">
-                    <div className="w-full h-2/5 flex justify-between items-end border-indigo-500 px-2">
+                    <div className="w-full h-2/5 flex justify-between items-end border-indigo-500 px-2 max-[1352px]:items-start max-[1352px]:mt-3">
                       <p className="text-body-semibold">Найпопулярніший продукт</p>
                       <Image
                         src="/assets/arrow-right-up.svg"
@@ -311,10 +309,34 @@ const Dashboard = ({ stringifiedData }: { stringifiedData: string }) => {
               </CarouselItem>
             </CarouselContent>
           </Carousel>
-          <p className="w-full text-subtle-semibold text-end px-10 mt-7"><span className="text-small-semibold text-green-500">{previewMode === "Percentage" ? "% ": "+ "}</span>Порівняння з минулим відповідним періодом</p>
+          <p className="w-full text-subtle-semibold text-end px-10 mt-7 max-[1061px]:text-center max-[1061px]:px-5"><span className="text-small-semibold text-green-500">{previewMode === "Percentage" ? "% ": "+ "}</span>Порівняння з минулим відповідним періодом | Враховуються тільки оплачені і доставлені замовлення</p>
         </div>
     </div>
   )
 }
 
 export default Dashboard;
+
+const CustomTooltip = ({ active, payload, label }: any) => {
+
+  let totalProductsSold = 0;
+
+  if (active && payload && payload.length) {
+    payload[0].payload.orders.forEach((order: Order) => {
+      order.products.forEach((product) => {
+        totalProductsSold += product.amount;
+    })});
+
+    const averageOrderValue = payload[0].payload.totalValue > 0 ? payload[0].payload.totalValue / payload[0].value : 0;
+    return (
+      <div className="bg-white/70 rounded-xl shadow-lg p-3">
+        <p className="text-small-semibold">{label}</p>
+        <p className="text-subtle-medium">Всього замовлень: {payload[0].value}</p>
+        <p className="text-subtle-medium">Загальна ціна: <span className="font-semibold text-green-500">{payload[0].payload.totalValue.toFixed(2)}</span></p>
+        <p className="text-subtle-medium">Продано товару: {totalProductsSold}</p>
+        <p className="text-subtle-medium">Середня вартість: <span className="text-green-500">{averageOrderValue.toFixed(2)}</span></p>
+      </div>
+    );
+  }
+  return null;
+};

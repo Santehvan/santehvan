@@ -55,7 +55,7 @@ const PaginationForCatalog = ({searchParams, countOfPages,}:{searchParams:any, c
 
         {searchParams.page <3?<></>:<>
         <PaginationItem>
-        <PaginationLink onClick={()=>setPage(1)}>
+        <PaginationLink onClick={()=>setPage(1)} rel="nofollow " href="#">
           1
         </PaginationLink>
         </PaginationItem>

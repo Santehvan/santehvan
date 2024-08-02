@@ -20,7 +20,7 @@ import {
 
 const components: { title: string; href: string;  }[] = [
   {
-    title: "контакти",
+    title: "Контакти",
     href: "/contacts",
   },
   {
