@@ -43,7 +43,18 @@ export const sendEmail = async({email, emailType, userId}:any) => {
                 <p>Для завершення реєстрації, будь ласка, підтвердіть свою електронну адресу, натиснувши на посилання нижче:</p>
             </div>
             
-            <a style=" margin-bottom: 80px; font-weight: bold; font-family: sans-serif;  color: #fff; text-decoration: none; background-color: #000; padding: 15px 30px; border-radius: 8px;" href="${process.env.DOMAIN}/${emailType === "VERIFY" ? `verifyemail?token=${hashedToken}` : `newPass?token=${hashedToken}`}";>Підтвердити</a>`
+            <a style=" font-weight: bold; font-family: sans-serif;  color: #fff; text-decoration: none; background-color: #000; padding: 15px 30px; border-radius: 8px;" href="${process.env.DOMAIN}/${emailType === "VERIFY" ? `verifyemail?token=${hashedToken}` : `newPass?token=${hashedToken}`}";>Підтвердити</a>
+              <div style="font-size: 18px; padding-bottom: 40px; font-family: sans-serif;">
+                    <p style="padding-top: 40px;">Якщо Ви не реєструвалися в нашому магазині, будь ласка, проігноруйте цей лист.</p>
+                    <p>Якщо у Вас виникли питання або потребуєте допомоги, не вагайтеся звернутися до нашої служби підтримки за електронною адресою <a href="mail:santehvan@gmail.com" style="color: #000;">santehvan@gmail.com</a></p>
+                    <p>Дякуємо, що обрали SantehVan!</p>
+                    <p>З найкращими побажаннями, <br>
+                        Команда SantehVan</p>
+                </div>
+            
+            
+            
+            `
         }
 //
         const mailresponse = await transport.sendMail
