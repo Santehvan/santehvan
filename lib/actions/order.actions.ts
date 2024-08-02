@@ -88,10 +88,9 @@ function generateRandomDateWithinYear() {
 }
 
 export async function createOrder({ products, userId, value, name, surname, phoneNumber, email, paymentType, deliveryMethod, city, adress, postalCode, comment }: CreateOrderParams) {
-    
-  try {
+    try {
         connectToDB();
-        console.log('userID:',userId)
+
         const uniqueId = generateUniqueId();
 
         const createdOrder = await Order.create({
@@ -207,6 +206,35 @@ export async function fetchOrders() {
     } catch (error: any) {
         throw new Error(`Error fetching ordeds: ${error.message}`)
     }
+}
+
+
+export async function fetchOrdersPayments() {
+  try {
+      connectToDB();
+
+      const orders = await Order.find()
+          .sort({ data: "desc" })      
+      
+      let payments = [];
+
+      for(const payment of orders) {
+        payments.push({
+          id: payment.id,
+          value: payment.value,
+          name: payment.name + " " + payment.surname,
+          phoneNumber: payment.phoneNumber,
+          email: payment.email,
+          paymentStatus: payment.paymentStatus,
+          deliveryStatus: payment.deliveryStatus,
+          date: payment.data 
+        })
+      }
+
+      return payments;
+  } catch (error: any) {
+      throw new Error(`Error fetching ordeds: ${error.message}`)
+  }
 }
 
 export async function fetchOrder(orderId: string) {
