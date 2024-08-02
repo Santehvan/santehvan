@@ -29,23 +29,21 @@ export const sendEmail = async({email, emailType, userId}:any) => {
             from: 'info@santehvan.com',
             to: email,
             subject: emailType === "VERIFY" ? "Лист підтвердження" : "Зміна пароля",
-            text:emailType === "VERIFY" ?
-`Підтвердження вашої електронної пошти на "Santehvan"
-
-Доброго дня!
-Дякуємо, що зареєструвались на нашому інтернет-магазині "Santehvan". 
-Для завершення процесу реєстрації, будь ласка, підтвердьте свою електронну пошту, натиснувши на кнопку нижче:`
-:
-`Зміна пароля
-
-Доброго дня!
-Ми отримали запит на зміну пароля для вашого акаунту на нашому сайті. Якщо ви не робили цей запит, будь ласка, проігноруйте цей лист або зв'яжіться з нашою службою підтримки.
-Щоб змінити ваш пароль, натисніть на посилання нижче:
-
-`
-
-,
-            html: `<a style="color:#fff; background-color:#000; padding:5px 15px; border-radius:10px" href="${process.env.DOMAIN}/${emailType === "VERIFY" ? `verifyemail?token=${hashedToken}` : `newPass?token=${hashedToken}`}";>Підтвердити</a>`
+            text:'',
+            html: `
+            <h1 style="font-family: sans-serif;">Вітаємо в Santehvan !</h1>
+            <div style="font-size: 18px; padding-bottom: 40px; font-family: sans-serif;">
+                <p>Вітаємо Вас у нашій спільноті! Ваша реєстрація успішно завершена. Тепер Ви маєте доступ до всіх переваг нашого магазину, включаючи:</p>
+                <ol>
+                    <li>Широкий асортимент якісної сантехніки.</li>
+                    <li>Спеціальні пропозиції та знижки для зареєстрованих користувачів.</li>
+                    <li>Можливість створювати списки бажань та порівнювати товари.</li>
+                    <li>Оперативну підтримку від нашої команди.</li>
+                </ol>
+                <p>Для завершення реєстрації, будь ласка, підтвердіть свою електронну адресу, натиснувши на посилання нижче:</p>
+            </div>
+            
+            <a style="font-weight: bold; font-family: sans-serif;  color: #fff; text-decoration: none; background-color: #000; padding: 15px 30px; border-radius: 8px;" href="${process.env.DOMAIN}/${emailType === "VERIFY" ? `verifyemail?token=${hashedToken}` : `newPass?token=${hashedToken}`}";>Підтвердити</a>`
         }
 //
         const mailresponse = await transport.sendMail
