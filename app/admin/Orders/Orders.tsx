@@ -103,8 +103,8 @@ const Orders = ({orders}:{orders:string}) => {
             setFiltredOrders(response.data.data);
           } catch (error: any) {
             console.log(error.message);
-          }
-    };
+  }
+};
 
 
 
