@@ -1,6 +1,6 @@
- 'use client'
+'use client'
 
- 
+
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { formatDateString } from '@/lib/utils'
@@ -88,23 +88,14 @@ const Orders = ({orders}:{orders:string}) => {
     },[p,d])
 
     const reloadOrders = async () => {
-          try {
-            const response = await axios.get('/api/getOrders', {
-              headers: {
-                'Cache-Control': 'no-cache',
-                'Pragma': 'no-cache',
-              },
-              params: {
-                t: new Date().getTime(), // Додаємо унікальний параметр до запиту
-              },
-            });
-        
-            console.log('response', response.data.data);
-            setFiltredOrders(response.data.data);
-          } catch (error: any) {
-            console.log(error.message);
+      try {
+          const response = await axios.get("/api/getOrders");
+          console.log('response',response.data.data)
+          setFiltredOrders(response.data.data);
+      } catch (error:any) {
+          console.log(error.mail);
+      }
   }
-};
 
 
 
@@ -232,5 +223,5 @@ const Orders = ({orders}:{orders:string}) => {
     </div>
   )
 }
-
+export const fetchCache = 'force-no-store';
 export default Orders
