@@ -30,7 +30,7 @@ export const sendEmail = async({email, emailType, userId}:any) => {
             to: email,
             subject: emailType === "VERIFY" ? "Лист підтвердження" : "Зміна пароля",
             text:'',
-            html: emailType === "VERIFY"`?
+            html: emailType === "VERIFY"?`
             <h1 style="font-family: sans-serif;">Вітаємо в Santehvan !</h1>
             <div style="font-size: 18px; padding-bottom: 40px; font-family: sans-serif;">
                 <p>Вітаємо Вас у нашій спільноті! Ваша реєстрація успішно завершена. Тепер Ви маєте доступ до всіх переваг нашого магазину, включаючи:</p>
