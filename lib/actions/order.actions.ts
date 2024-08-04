@@ -12,7 +12,7 @@ interface CreateOrderParams {
     products: {
         product: string,
         amount: number
-    } [],
+    } [], 
     userId: string;
     value: number;
     name: string;
