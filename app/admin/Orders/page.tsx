@@ -11,7 +11,7 @@ import OrderCard from '@/components/cards/OrderCard'
 import { formatDateString } from '@/lib/utils'
 import Orders from './Orders'
 
-const Page = async () => {
+const Page = async ({searchParams}:any) => {
 
     // const getOrders = async () => {
     //     try {
@@ -38,7 +38,7 @@ const Page = async () => {
     //   }
     // }
 
-    const orders = await fetchOrders();
+    let orders = await fetchOrders();
 
   
        
