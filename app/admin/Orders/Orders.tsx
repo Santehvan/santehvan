@@ -16,6 +16,7 @@ import {
   } from "@/components/ui/select"
 
 import { Button } from '@/components/ui/button'
+import axios from 'axios'
 
 interface Order{
   _id:string,
@@ -59,7 +60,7 @@ const Orders = ({orders}:{orders:string}) => {
 
     const Orders = JSON.parse(orders)
   
-    
+    console.log('Orders',Orders);
 
     const payment = Array.from(new Set (Orders.map((item:Order) => item.paymentStatus))).filter(function(item) {return item !== '';});
     const delivery = Array.from(new Set (Orders.map((item:Order) => item.deliveryStatus))).filter(function(item) {return item !== '';});
@@ -86,6 +87,17 @@ const Orders = ({orders}:{orders:string}) => {
       
     },[p,d])
 
+    const reloadOrders = async () => {
+      try {
+          const response = await axios.get("/api/getOrders");
+          console.log('response',response.data.data)
+          setFiltredOrders(response.data.data);
+      } catch (error:any) {
+          console.log(error.mail);
+      }
+  }
+
+
 
     
     //setFiltredOrders(orders.filter((obj:Order) => obj.paymentStatus?.includes(oplata)))
@@ -93,10 +105,10 @@ const Orders = ({orders}:{orders:string}) => {
   return (
     <div>
 
-        {/* <div className='flex justify-end gap-5 mt-10'>
+        <div className='flex justify-end gap-5 mt-10'>
 
 
-        
+        <Button onClick={reloadOrders}>Оновити</Button>
 
 
         <Select onValueChange={(element)=>setP(element)}>
@@ -176,7 +188,7 @@ const Orders = ({orders}:{orders:string}) => {
 
 
 
-        </div> */}
+        </div>
 
 
 
