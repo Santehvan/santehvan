@@ -59,6 +59,7 @@ const Orders = ({orders}:{orders:string}) => {
 
     const Orders = JSON.parse(orders)
     console.log('fd',orders)
+    console.log('Orders JSON',Orders)
     
 
     const payment = Array.from(new Set (Orders.map((item:Order) => item.paymentStatus))).filter(function(item) {return item !== '';});
