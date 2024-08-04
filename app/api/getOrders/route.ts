@@ -9,13 +9,18 @@ export async function GET(request: NextRequest) {
     await connectToDB();  // Додаємо await для асинхронного підключення
 
     const orders = await Order.find({});
-    
-    return NextResponse.json({
+
+    const response = NextResponse.json({
       message: "Orders found",
       data: orders,
     });
+    
+    response.headers.set('Cache-Control', 'no-store');
+    return response;
   } catch (error: any) {
     console.log('Server Error:', error);
-    return NextResponse.json({ error: error.message }, { status: 400 });
+    const response = NextResponse.json({ error: error.message }, { status: 400 });
+    response.headers.set('Cache-Control', 'no-store');
+    return response;
   }
-} 
+}
