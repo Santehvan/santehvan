@@ -1,20 +1,15 @@
-{
-    "version": 2,
-    "builds": [
+module.exports = {
+  async headers() {
+    return [
       {
-        "src": "next.config.js",
-        "use": "@vercel/next"
-      }
-    ],
-    "headers": [
-      {
-        "source": "/(.*)",
-        "headers": [
+        source: '/(.*)',
+        headers: [
           {
-            "key": "Cache-Control",
-            "value": "no-store, no-cache, must-revalidate, proxy-revalidate"
-          }
-        ]
-      }
+            key: 'Cache-Control',
+            value: 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0'
+          },
+        ],
+      },
     ]
-  }
+  },
+}
