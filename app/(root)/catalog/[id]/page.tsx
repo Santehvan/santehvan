@@ -73,7 +73,7 @@ const CatalogItem = async (context:any) => {
               </div>
               <div className='flex gap-5 mt-10 max-sm:flex-col'>
                 <div className='flex'>
-                  <AddToCart priceWithoutDiscount={product.price} id={product._id} image={product.images[0]} name={product.name} price={product.priceToShow} />
+                  <AddToCart priceWithoutDiscount={product.price} id={product.id} image={product.images[0]} name={product.name} price={product.priceToShow} />
                 
                 </div>
                 <div className='flex'><Link href='/catalog'><Button variant='outline'>Повернутися до покупок</Button></Link></div>

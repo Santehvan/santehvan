@@ -45,6 +45,7 @@ const Page = async () => {
     // })
 
     const email = await getSession();
+    console.log(email)
 
     if(!email){
       redirect('/login')
@@ -52,6 +53,7 @@ const Page = async () => {
 
 
     const user = await fetchUserByEmail(email);
+    console.log(user)
     // useEffect(()=>{
     //     setOrderDetails({...orderDetails, toPay:priceToPay})
     // },[priceToPay])
