@@ -106,7 +106,7 @@ const Orders = ({orders}:{orders:string}) => {
   }
 };
 
-export const fetchCache = 'force-no-store';
+
 
     
     //setFiltredOrders(orders.filter((obj:Order) => obj.paymentStatus?.includes(oplata)))
