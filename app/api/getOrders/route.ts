@@ -6,7 +6,7 @@ import User from "@/lib/models/user.model";
 
 export async function GET(request: NextRequest) {
   try {
-    await connectToDB();  // Додаємо await для асинхронного підключення
+    await connectToDB();
 
     const orders = await Order.find({});
 
