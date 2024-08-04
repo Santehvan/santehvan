@@ -30,7 +30,7 @@ export const sendEmail = async({email, emailType, userId}:any) => {
             to: email,
             subject: emailType === "VERIFY" ? "Лист підтвердження" : "Зміна пароля",
             text:'',
-            html: `
+            html: emailType === "VERIFY"`?
             <h1 style="font-family: sans-serif;">Вітаємо в Santehvan !</h1>
             <div style="font-size: 18px; padding-bottom: 40px; font-family: sans-serif;">
                 <p>Вітаємо Вас у нашій спільноті! Ваша реєстрація успішно завершена. Тепер Ви маєте доступ до всіх переваг нашого магазину, включаючи:</p>
@@ -51,10 +51,18 @@ export const sendEmail = async({email, emailType, userId}:any) => {
                     <p>З найкращими побажаннями, <br>
                         Команда SantehVan</p>
                 </div>
-            
-            
-            
-            `
+            `:
+                `<h1 style="font-family: sans-serif;">Запит на зміну пароля в Santehvan</h1>
+    <div style="font-size: 18px; padding-bottom: 40px; font-family: sans-serif;">
+        <p>Якщо Ви ініціювали цей запит, будь ласка, натисніть на посилання нижче, щоб створити новий пароль:</p>
+    </div>
+    <a href="#" style="font-weight: bold; font-family: sans-serif;  color: #fff; text-decoration: none; background-color: #000; padding: 15px 30px; border-radius: 8px;">Підтвердити</a>
+    <div style="font-size: 18px; padding-bottom: 40px; font-family: sans-serif;">
+        <p style="padding-top: 40px;">Якщо Ви не реєструвалися в нашому магазині, будь ласка, проігноруйте цей лист.</p>
+        <p>Якщо у Вас виникли питання або потребуєте допомоги, не вагайтеся звернутися до нашої служби підтримки за електронною адресою <a href="mail:santehvan@gmail.com" style="color: #000;">santehvan@gmail.com</a></p>
+        <p>Дякуємо, що обрали SantehVan!</p>
+        <p>З найкращими побажаннями, <br>
+            Команда SantehVan</p>`
         }
 //
         const mailresponse = await transport.sendMail
