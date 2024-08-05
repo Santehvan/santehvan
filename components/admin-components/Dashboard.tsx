@@ -297,9 +297,9 @@ const Dashboard = ({ stringifiedData }: { stringifiedData: string }) => {
                     </div>
                     <div className="w-full h-3/5 flex justify-between items-center  border-indigo-500 px-2">
                       {timePeriod.mostPopularProduct.searchParam !== "" ? (
-                        <Link href={`/catalog/${timePeriod.mostPopularProduct.searchParam}`} target="_blank" className="text-heading3-bold">{timePeriod.mostPopularProduct.name}</Link>
+                        <Link href={`/catalog/${timePeriod.mostPopularProduct.searchParam}`} target="_blank" className="text-heading3-bold">{timePeriod.mostPopularProduct.name?timePeriod.mostPopularProduct.name:''}</Link>
                       ): (
-                        <p className="text-heading3-bold">{timePeriod.mostPopularProduct.name}</p>
+                        <p className="text-heading3-bold">{timePeriod.mostPopularProduct.name?timePeriod.mostPopularProduct.name:''}</p>
                       )}
                       <div className="min-w-14 h-6 text-green-500 flex justify-center items-center bg-black/10 rounded-full px-2">
                         <p className="text-subtle-medium font-regular">{timePeriod.mostPopularProduct.quantity}</p>
