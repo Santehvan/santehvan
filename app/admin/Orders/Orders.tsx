@@ -104,7 +104,7 @@ const Orders = ({orders}:{orders:string}) => {
         <div className='flex justify-end gap-5 mt-10'>
 
 
-        <Button onClick={reloadOrders}>Оновити</Button>
+       
 
 
         <Select onValueChange={(element)=>setP(element)}>
