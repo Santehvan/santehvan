@@ -131,6 +131,8 @@ export async function createOrder({ products, userId, value, name, surname, phon
 
             await orderedProduct.save();
         }
+
+        revalidatePath('/admin/Orders')
     } catch (error: any) {
         throw new Error(`Error creating order: ${error.message}`)
     }
