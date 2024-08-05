@@ -313,7 +313,7 @@ export async function deleteOrder(id: string, path: string) {
 
         revalidatePath(path);
         revalidatePath("/myOrders");
-        revalidatePath("/admin/orders");
+        revalidatePath("/admin/Orders");
     } catch (error: any) {
         throw new Error(`Error deleting order: ${error.message}`)
     }
