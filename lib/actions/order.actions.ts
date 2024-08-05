@@ -313,7 +313,9 @@ export async function deleteOrder(id: string, path: string) {
 
         revalidatePath(path);
         revalidatePath("/myOrders");
-        revalidatePath("/admin/Orders");
+        revalidatePath('/admin/Orders')
+        revalidatePath('/admin/dashboard')
+        revalidatePath('/admin/payments')
     } catch (error: any) {
         throw new Error(`Error deleting order: ${error.message}`)
     }
@@ -328,7 +330,9 @@ export async function changePaymentStatus(id: string, status: string, path: stri
         order.paymentStatus = status;
 
         order.save();
-
+        revalidatePath('/admin/Orders')
+        revalidatePath('/admin/dashboard')
+        revalidatePath('/admin/payments')
         revalidatePath(path);
     } catch (error: any) {
         throw new Error(`Error changing order's payment status: ${error.message}`)
@@ -344,7 +348,9 @@ export async function changedeliveryStatus(id: string, status: string, path: str
         order.deliveryStatus = status;
 
         order.save();
-
+        revalidatePath('/admin/Orders')
+        revalidatePath('/admin/dashboard')
+        revalidatePath('/admin/payments')
         revalidatePath(path);
     } catch (error: any) {
         throw new Error(`Error changing order's delivery status: ${error.message}`)
