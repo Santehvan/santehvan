@@ -133,6 +133,8 @@ export async function createOrder({ products, userId, value, name, surname, phon
         }
 
         revalidatePath('/admin/Orders')
+        revalidatePath('/admin/dashboard')
+        revalidatePath('/admin/payments')
     } catch (error: any) {
         throw new Error(`Error creating order: ${error.message}`)
     }
