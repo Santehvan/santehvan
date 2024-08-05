@@ -88,13 +88,9 @@ const Orders = ({orders}:{orders:string}) => {
     },[p,d])
 
     const reloadOrders = async () => {
-      try {
-          const response = await axios.get("/api/getOrders");
-          console.log('response',response.data.data)
-          setFiltredOrders(response.data.data);
-      } catch (error:any) {
-          console.log(error.mail);
-      }
+      revalidatePath('/admin/Orders')
+      revalidatePath('/admin/dashboard')
+      revalidatePath('/admin/')
   }
 
 
