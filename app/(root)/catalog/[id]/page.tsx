@@ -14,7 +14,7 @@ const CatalogItem = async (context:any) => {
     // Видалити пробіли з обох боків рядка, розбити його на масив слів і видалити останнє слово
     let words = text.trim().split('_');
     console.log(color)
-    if(color.name=='Колір'){
+    if(color?.name=='Колір'){
       let CountWords = words.length
       let colorLenght = color.value.trim().split(' ').length;
       console.log(CountWords)
@@ -33,7 +33,7 @@ const CatalogItem = async (context:any) => {
 
   
   const product = await Product.findOne({'params.0.value': context.params.id});
-  let modifiedText = removeLastWord(context.params.id, product.params[5]);
+  let modifiedText = removeLastWord(context.params.id, product?.params[5]);
   const colors =await Product.find({'params.0.value': { $regex: modifiedText, $options: "i" } });
   let fsd = context.params.id
   
