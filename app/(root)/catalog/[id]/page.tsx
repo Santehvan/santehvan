@@ -89,13 +89,23 @@ const CatalogItem = async (context:any) => {
             <table className='w-fit '>
             <tbody>
             
-            {product.params.map((param:any) =>(
-              
-              <tr key={param.name}>
-                <td className='py-3 px-4 border border-gray-700 text-[18px]'>{param.name}</td>
-                <td className='py-3 px-4 border border-gray-700 text-[18px]'>{param.value.replaceAll("_", " ")}</td>
-              </tr>
-            ) )}
+            {product.params.map((param: any) => {
+              const formattedValue = (() => {
+                  const number = parseFloat(param.value);
+                  if (!isNaN(number)) {
+                      const roundedNumber = Math.round(number * 100) / 100;
+                      return roundedNumber.toString().replaceAll("_", " ");
+                  }
+                  return param.value.replaceAll("_", " ");
+              })();
+          
+              return (
+                  <tr key={param.name}>
+                      <td className='py-3 px-4 border border-gray-700 text-[18px]'>{param.name}</td>
+                      <td className='py-3 px-4 border border-gray-700 text-[18px]'>{formattedValue}</td>
+                  </tr>
+              );
+          })}
               </tbody>
             </table>
           </div>
