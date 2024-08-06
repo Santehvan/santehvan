@@ -33,11 +33,11 @@ export default function RootLayout({
           <Provider>
               <Header/>
               <AppWrapper>
-                <section className = "main-container">
+                <main className = "main-container">
                   <div className = "w-full max-w-screen-2xl px-3">
                       {children}
                   </div>
-                </section>
+                </main>
                 <StickyCart/>
             </AppWrapper>
           <Footer/>
