@@ -50,7 +50,7 @@ const Search = ({searchParams}:any) => {
             <SelectGroup>
               <SelectItem value="default" aria-label="Default">Звичайне</SelectItem>
               <SelectItem value="low_price" aria-label="Low Price">Ціна(низька)</SelectItem>
-              <SelectItem value="high_price" aria-label="High Price">Ціна(Висока)</SelectItem>
+              <SelectItem value="hight_price" aria-label="High Price">Ціна(Висока)</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select></>
