@@ -333,7 +333,7 @@ const Filter = ({maxPrice, searchParams, minPrice, maxMin, vendors, series, colo
                   <AccordionContent>
                     {Type.map((t)=>(
                       <div className="flex items-center space-x-2 mt-4" key={t}>
-                        <Checkbox  id={t} onCheckedChange={(e)=>handleCheckboxChange(t)} checked={filter.type.includes(t)} />
+                        <Checkbox  id={t} onCheckedChange={(e)=>handleType(t)} checked={filter.type.includes(t)} />
                       
                       <label
                         htmlFor={t}
@@ -355,7 +355,7 @@ const Filter = ({maxPrice, searchParams, minPrice, maxMin, vendors, series, colo
                   <AccordionContent>
                     {series.map((s)=>(
                       <div className="flex items-center space-x-2 mt-4" key={s}>
-                      <Checkbox id={s} onCheckedChange={(e)=>handleCheckboxChange(s)} checked={filter.series.includes(s)} />
+                      <Checkbox id={s} onCheckedChange={(e)=>handleSeries(s)} checked={filter.series.includes(s)} />
                       <label
                         htmlFor={s}
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -376,7 +376,7 @@ const Filter = ({maxPrice, searchParams, minPrice, maxMin, vendors, series, colo
                   <AccordionContent>
                     {color.map((c)=>(
                       <div className="flex items-center space-x-2 mt-4" key={c}>
-                      <Checkbox  id={c} onCheckedChange={(e)=>handleCheckboxChange(c)} checked={filter.color.includes(c)} />
+                      <Checkbox  id={c} onCheckedChange={(e)=>handleColor(c)} checked={filter.color.includes(c)} />
                       <label
                         htmlFor={c}
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
