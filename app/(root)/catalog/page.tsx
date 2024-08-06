@@ -176,7 +176,7 @@ const catalog = async ({searchParams,data}:any) => {
             
           </div> 
         
-          <div className='grid  auto-cols-max gap-4 mt-8 grid-cols-4 px-4 max-2xl:grid-cols-3 max-lg:grid-cols-2 max-grid1:grid-cols-1 '>
+          <div className='grid  auto-cols-max gap-4 mt-8 grid-cols-4 px-4 max-2xl:grid-cols-3 max-lg:grid-cols-2 max-grid1:grid-cols-1 max-grid1:mt-24'>
             {filtredProducts
             .slice(min, max)
             .map((product) =>(
