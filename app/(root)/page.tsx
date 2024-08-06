@@ -25,7 +25,7 @@ export default async function Home() {
   return (
     <>
 
-        <main className="flex flex-row">
+        <div className="flex flex-row">
           <section className = "main-container">
             <div className = "w-full max-w-screen-2xl px-3">
               <Banner/>
@@ -40,7 +40,7 @@ export default async function Home() {
               <StickyCart/>   
             </div> 
           </section>
-        </main>
+        </div>
  
     </>
   );
