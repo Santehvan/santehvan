@@ -25,8 +25,8 @@ export const orderMail = async(orderId:any) => {
             text:'',
             html: 
             `
-            <h1 style="font-family: sans-serif; margin-bottom:15px;">Нове замовлення було створене !</h1>
-            <a style=" font-weight: bold; font-family: sans-serif;  color: #fff; text-decoration: none; background-color: #000; padding: 15px 30px; border-radius: 8px;" href="${process.env.DOMAIN}/${orderId}";>Переглянути </a>
+            <h1 style="font-family: sans-serif; margin-bottom:75px;">Нове замовлення було створене !</h1>
+            <a style=" font-weight: bold; font-family: sans-serif;  color: #fff; text-decoration: none; background-color: #000; padding: 15px 30px; border-radius: 8px;" href="${process.env.DOMAIN}/admin/Orders/${orderId}";>Переглянути </a>
            <div style="font-size: 18px; padding-bottom: 40px; font-family: sans-serif;">
                     <p style="padding-top: 40px;">Натисніть на кнопку вище щоб переглянути деталі замовлення.</p>
                     <p>Якщо кнопка не спацювала перевірте замовлення в адмін панелі</a></p>
