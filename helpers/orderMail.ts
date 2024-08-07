@@ -27,7 +27,7 @@ export const orderMail = async({orderId}:any) => {
             `
             <h1 style="font-family: sans-serif; margin-bottom:15px;">Нове замовлення було створене !</h1>
             <a style=" font-weight: bold; font-family: sans-serif;  color: #fff; text-decoration: none; background-color: #000; padding: 15px 30px; border-radius: 8px;" href="${process.env.DOMAIN}/${orderId}";>Переглянути </a>
-            <p style="font-family: sans-serif; margin-top:15px;>Натисніть на кнопку вище, щоб переглянути деталі замовлення</p>
+            <p style="font-family: sans-serif; padding:35px;>Натисніть на кнопку вище, щоб переглянути деталі замовлення</p>
             `
         }
 
