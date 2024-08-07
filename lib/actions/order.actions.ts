@@ -7,6 +7,7 @@ import User from "../models/user.model";
 import mongoose from 'mongoose';
 import { revalidatePath } from "next/cache";
 import moment from "moment";
+import { orderMail } from "@/helpers/orderMail";
 
 interface CreateOrderParams {
     products: {
@@ -134,7 +135,9 @@ export async function createOrder({ products, userId, value, name, surname, phon
 
         revalidatePath('/admin/Orders')
         revalidatePath('/admin/dashboard')
-        revalidatePath('/admin/payments')
+        revalidatePath('/admin/')
+        
+        await orderMail({uniqueId})
     } catch (error: any) {
         throw new Error(`Error creating order: ${error.message}`)
     }
@@ -313,9 +316,7 @@ export async function deleteOrder(id: string, path: string) {
 
         revalidatePath(path);
         revalidatePath("/myOrders");
-        revalidatePath('/admin/Orders')
-        revalidatePath('/admin/dashboard')
-        revalidatePath('/admin/payments')
+        revalidatePath("/admin/Orders");
     } catch (error: any) {
         throw new Error(`Error deleting order: ${error.message}`)
     }
@@ -330,9 +331,7 @@ export async function changePaymentStatus(id: string, status: string, path: stri
         order.paymentStatus = status;
 
         order.save();
-        revalidatePath('/admin/Orders')
-        revalidatePath('/admin/dashboard')
-        revalidatePath('/admin/payments')
+
         revalidatePath(path);
     } catch (error: any) {
         throw new Error(`Error changing order's payment status: ${error.message}`)
@@ -348,9 +347,7 @@ export async function changedeliveryStatus(id: string, status: string, path: str
         order.deliveryStatus = status;
 
         order.save();
-        revalidatePath('/admin/Orders')
-        revalidatePath('/admin/dashboard')
-        revalidatePath('/admin/payments')
+
         revalidatePath(path);
     } catch (error: any) {
         throw new Error(`Error changing order's delivery status: ${error.message}`)
