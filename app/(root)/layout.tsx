@@ -8,7 +8,8 @@ import Provider from "../Provider";
 import { AppWrapper } from "./context";
 import CartPage from "@/components/shared/CartPage";
 import { SpeedInsights } from "@vercel/speed-insights/next"
-
+import Head from "next/head";
+import GoogleTagManager from "@/components/shared/GoogleTagManager";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +30,7 @@ export default function RootLayout({
 
   return (
       <html lang="en">
+        <GoogleTagManager />
         <body className={inter.className}>
           <Provider>
               <Header/>
