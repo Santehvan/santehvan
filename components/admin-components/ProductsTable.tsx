@@ -32,7 +32,8 @@ const ProductsTable =  ({stringifiedProducts}:{stringifiedProducts:string}) => {
  
   
   const products = JSON.parse(stringifiedProducts)
-
+  const category = Array.from(new Set (products.map((item:any) => item.category))).filter(function(item) {return item !== '';});
+  console.log(category)
   const [first, setFirst] = useState(0);
   const [last, setLast] = useState(9);
   const [pageNumber, setPageNumber] = useState(1);
@@ -103,11 +104,9 @@ const ProductsTable =  ({stringifiedProducts}:{stringifiedProducts:string}) => {
           <SelectContent>
             <SelectGroup>
               <SelectItem value="Всі">Всі категорії</SelectItem>
-              <SelectItem value="Меблі для ванної кімнати">Меблі для ванної кімнати</SelectItem>
-              <SelectItem value="Житлові меблі">Житлові меблі</SelectItem>
-              <SelectItem value="Дитячі меблі">Дитячі меблі</SelectItem>
-              <SelectItem value="Сад та город">Сад та город</SelectItem>
-              <SelectItem value="Сантехніка">Сантехніка</SelectItem>
+              {category.map((category:any)=>(
+                <SelectItem value={category}>{category}</SelectItem>
+              ))}
             </SelectGroup>
           </SelectContent>
         </Select>
