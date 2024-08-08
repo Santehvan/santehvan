@@ -14,16 +14,21 @@ const CatalogItem = async (context:any) => {
     // Видалити пробіли з обох боків рядка, розбити його на масив слів і видалити останнє слово
     let words = text.trim().split('_');
     console.log(color)
-    if(color?.name=='Колір'){
-      let CountWords = words.length
-      let colorLenght = color.value.trim().split(' ').length;
-      console.log(CountWords)
-      if(CountWords>1){
+    let CountWords = words.length
+    console.log('words',words)
+    words = words.filter(item => !/\(.*\)/.test(item));
+    if(color?.name=='Колір' && CountWords>2){
+       
+       let colorLenght = color.value.trim().split(' ').length;
+       console.log('CountWords:',CountWords)
+       if(CountWords>1){
         words.splice(-colorLenght);
-      }
-    } 
+       }
+     }else{
+      words = ['sdffffffffdsfdd']
+     } 
     
-
+   
     return words.join('_'); // З'єднує слова назад у рядок
   }
  
@@ -35,6 +40,7 @@ const CatalogItem = async (context:any) => {
   const product = await Product.findOne({'params.0.value': context.params.id});
   let modifiedText = removeLastWord(context.params.id, product?.params[5]);
   const colors =await Product.find({'params.0.value': { $regex: modifiedText, $options: "i" } });
+  console.log('colors',colors)
   let fsd = context.params.id
   
   fsd.split('_').pop()
@@ -60,7 +66,7 @@ const CatalogItem = async (context:any) => {
               {garantia?<div className='flex items-center mt-4 gap-2'><p className='fa fa-shield'></p>{garantia.name}:{garantia.value}</div>:''}
               
               <div className='mt-10'>
-                <h2 className='text-[25px] font-medium'>Колір</h2>
+              {colors.length>0?<h2 className='text-[25px] font-medium'>Колір</h2>:''}
                 <div className='flex gap-5 mt-5  flex-wrap'>
                   {colors?.map((color:any) =>(
                     <Link key={color.params[0].value} href={color.params[0].value} className='border-2 border-gray-700 rounded-lg p-1'><Image src={color.images[0]} width={80} height={80} alt='color'></Image></Link>
@@ -90,22 +96,22 @@ const CatalogItem = async (context:any) => {
             <tbody>
             
             {product.params.map((param: any) => {
-              const formattedValue = (() => {
-                  const number = parseFloat(param.value);
-                  if (!isNaN(number)) {
-                      const roundedNumber = Math.round(number * 100) / 100;
-                      return roundedNumber.toString().replaceAll("_", " ");
-                  }
-                  return param.value.replaceAll("_", " ");
-              })();
-          
-              return (
-                  <tr key={param.name}>
-                      <td className='py-3 px-4 border border-gray-700 text-[18px]'>{param.name}</td>
-                      <td className='py-3 px-4 border border-gray-700 text-[18px]'>{formattedValue}</td>
-                  </tr>
-              );
-          })}
+    const formattedValue = (() => {
+        const number = parseFloat(param.value);
+        if (!isNaN(number)) {
+            const roundedNumber = Math.round(number * 100) / 100;
+            return roundedNumber.toString().replaceAll("_", " ");
+        }
+        return param.value.replaceAll("_", " ");
+    })();
+
+    return (
+        <tr key={param.name}>
+            <td className='py-3 px-4 border border-gray-700 text-[18px]'>{param.name}</td>
+            <td className='py-3 px-4 border border-gray-700 text-[18px]'>{formattedValue}</td>
+        </tr>
+    );
+})}
               </tbody>
             </table>
           </div>
