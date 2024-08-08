@@ -105,7 +105,7 @@ const ProductsTable =  ({stringifiedProducts}:{stringifiedProducts:string}) => {
             <SelectGroup>
               <SelectItem value="Всі">Всі категорії</SelectItem>
               {category.map((category:any)=>(
-                <SelectItem value={category}>{category}</SelectItem>
+                <SelectItem key={category} value={category}>{category}</SelectItem>
               ))}
             </SelectGroup>
           </SelectContent>
