@@ -104,7 +104,9 @@ export async function createProduct({ id, name, quantity, url, price, priceToSho
             description: description,
         })
 
-  
+        revalidatePath('/admin/Orders')
+        revalidatePath('/admin/dashboard')
+        revalidatePath('/admin/')
     } catch (error: any) {
         throw new Error(`Error creating new product, ${error.message}`)
     }
@@ -351,6 +353,9 @@ export async function editProduct({ id, name, quantity, url, priceToShow, price,
         createdProduct.save();
 
         revalidatePath(`/admin/createProduct/list/${id}`)
+        revalidatePath('/admin/Orders')
+        revalidatePath('/admin/dashboard')
+        revalidatePath('/admin/')
     } catch (error: any) {
         throw new Error(`Error creating url-product, ${error.message}`)
     }
@@ -365,6 +370,9 @@ export async function listProduct(productId: string) {
         product.isAvailable = true;
 
         product.save();
+        revalidatePath('/admin/Orders')
+        revalidatePath('/admin/dashboard')
+        revalidatePath('/admin/')
     } catch (error: any) {
         throw new Error(`Error listing product: ${error.message}`)
     }
