@@ -35,8 +35,10 @@ import { createOrder } from "@/lib/actions/order.actions";
 
 const CreateOrder = ({ userId, email }: { userId: string, email: string}) => {
 
+  
   if(!userId){
-    userId = '66af3d322eed694a8c918b59'
+    //@ts-ignore
+    userId = process.env.ANONIMUS
   }
 
 
