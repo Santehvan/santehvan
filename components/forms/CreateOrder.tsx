@@ -35,8 +35,11 @@ import { createOrder } from "@/lib/actions/order.actions";
 
 const CreateOrder = ({ userId, email }: { userId: string, email: string}) => {
 
-  
- 
+  if(!userId){
+    //@ts-ignore
+    userId = process.env.ANONIMUS
+  }
+
 
   
   const router = useRouter();
@@ -72,7 +75,6 @@ const CreateOrder = ({ userId, email }: { userId: string, email: string}) => {
 
     setCartData([]);
     // router.push(`/myOrders`)
-    router.push(`/catalog`)
   }
 
 
