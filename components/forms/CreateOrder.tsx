@@ -4,7 +4,7 @@ import * as z from "zod";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { usePathname, useRouter } from "next/navigation";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -34,6 +34,13 @@ import { createOrder } from "@/lib/actions/order.actions";
 // }
 
 const CreateOrder = ({ userId, email }: { userId: string, email: string}) => {
+
+  if(!userId){
+    userId = '66af3d322eed694a8c918b59'
+  }
+
+  console.log(userId)
+  
   const router = useRouter();
 
   const form = useForm<z.infer<typeof OrderValidation>>({
@@ -45,9 +52,10 @@ const CreateOrder = ({ userId, email }: { userId: string, email: string}) => {
 
   const products = cartData.map((product: {id: string, name: string, image: string, price: number, priceWithoutDiscount: number, quantity: number}) => ({product: product.id, amount: product.quantity}))
 
-  console.log(products);
+
 
   const onSubmit = async (values: z.infer<typeof OrderValidation>) => {
+    console.log('Submit userId', userId)
     await createOrder({
       products: products,
       userId: userId,
@@ -65,10 +73,11 @@ const CreateOrder = ({ userId, email }: { userId: string, email: string}) => {
     })
 
     setCartData([]);
-    router.push(`/myOrders`)
+    // router.push(`/myOrders`)
   }
 
-  form.setValue("email", email);
+
+  
 
   return (
     <Form {...form}>
