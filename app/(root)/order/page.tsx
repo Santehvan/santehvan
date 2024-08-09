@@ -47,9 +47,6 @@ const Page = async () => {
     const email = await getSession();
     console.log(email)
 
-    if(!email){
-      redirect('/login')
-    }
 
 
     const user = await fetchUserByEmail(email);
