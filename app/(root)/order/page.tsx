@@ -45,12 +45,12 @@ const Page = async () => {
     // })
 
     const email = await getSession();
-    console.log(email)
+
 
 
 
     const user = await fetchUserByEmail(email);
-    console.log(user)
+
     // useEffect(()=>{
     //     setOrderDetails({...orderDetails, toPay:priceToPay})
     // },[priceToPay])
