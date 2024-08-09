@@ -44,13 +44,16 @@ const Page = async () => {
     //     data:`${day}.${month}.${year}`
     // })
 
-    const email = 'random123'
+    const email = await getSession();
+   
+
+    // if(!email){
+    //   redirect('/login')
+    // }
 
 
-
-
-    const user = 'random@gmail.com'
-
+    const user = await fetchUserByEmail(email);
+    
     // useEffect(()=>{
     //     setOrderDetails({...orderDetails, toPay:priceToPay})
     // },[priceToPay])
@@ -93,7 +96,7 @@ const Page = async () => {
 
   return (
     <section className="flex flex-row w-full justify-between max-lg:flex-col">
-        <CreateOrder userId={user._id} email={email}/>
+        <CreateOrder userId={user?._id} email={email}/>
     </section>
 
 //     <>
