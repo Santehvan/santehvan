@@ -44,12 +44,12 @@ const Page = async () => {
     //     data:`${day}.${month}.${year}`
     // })
 
-    const email = await getSession();
+    const email = 'random123'
 
 
 
 
-    const user = await fetchUserByEmail(email);
+    const user = 'random@gmail.com'
 
     // useEffect(()=>{
     //     setOrderDetails({...orderDetails, toPay:priceToPay})
