@@ -93,7 +93,7 @@ export async function createOrder({ products, userId, value, name, surname, phon
         connectToDB();
 
         const uniqueId = generateUniqueId();
-        console.log('uniqueId', uniqueId)
+       
         const createdOrder = await Order.create({
             id: uniqueId,
             products: products,
@@ -112,7 +112,7 @@ export async function createOrder({ products, userId, value, name, surname, phon
             paymentStatus: "Pending",
             deliveryStatus: "Proceeding",
         })
-        console.log('userId lib',userId)
+  
 
         if(userId!='66af3d322eed694a8c918b59'){
           const user = await User.findById(userId);
