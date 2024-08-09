@@ -39,7 +39,7 @@ const CreateOrder = ({ userId, email }: { userId: string, email: string}) => {
     userId = '66af3d322eed694a8c918b59'
   }
 
-  console.log(userId)
+
   
   const router = useRouter();
 
@@ -55,7 +55,7 @@ const CreateOrder = ({ userId, email }: { userId: string, email: string}) => {
 
 
   const onSubmit = async (values: z.infer<typeof OrderValidation>) => {
-    console.log('Submit userId', userId)
+   
     await createOrder({
       products: products,
       userId: userId,
