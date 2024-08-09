@@ -74,7 +74,7 @@ const CatalogItem = async (context:any) => {
                 </div>
               </div>
               <div className='mt-5'>
-                <p className=" text-gray-700 line-through text-[25px]">{product.price}</p>
+                <p className=" text-gray-700 line-through text-[25px]">{product.price != product.priceToShow?product.price:''}</p>
                 <p className=" text-[30px]">₴{product.priceToShow}</p>
               </div>
               <div className='flex gap-5 mt-10 max-sm:flex-col'>
