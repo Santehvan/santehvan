@@ -93,7 +93,7 @@ export async function createOrder({ products, userId, value, name, surname, phon
         connectToDB();
 
         const uniqueId = generateUniqueId();
-
+        console.log('uniqueId', uniqueId)
         const createdOrder = await Order.create({
             id: uniqueId,
             products: products,
@@ -112,18 +112,23 @@ export async function createOrder({ products, userId, value, name, surname, phon
             paymentStatus: "Pending",
             deliveryStatus: "Proceeding",
         })
+        console.log('userId lib',userId)
 
-        const user = await User.findById(userId);
+        if(userId!='66af3d322eed694a8c918b59'){
+          const user = await User.findById(userId);
+          await user.orders.push(createdOrder._id);
 
-        await user.orders.push(createdOrder._id);
+          await User.findById(userId).updateOne({
+            name: name,
+            surname: surname,
+            phoneNumber: phoneNumber
+          })
+  
+          await user.save();
+        }
 
-        await User.findById(userId).updateOne({
-          name: name,
-          surname: surname,
-          phoneNumber: phoneNumber
-        })
-
-        await user.save();
+     
+       
 
         for(const product of products) {
             const orderedProduct = await Product.findById(product.product);
@@ -139,10 +144,11 @@ export async function createOrder({ products, userId, value, name, surname, phon
         
         await orderMail(uniqueId)
     } catch (error: any) {
+        console.log('???')
         throw new Error(`Error creating order: ${error.message}`)
+        
     }
 }
-
 // export async function createOrder({ products, userId, value, name, surname, phoneNumber, email, paymentType, deliveryMethod, city, adress, postalCode, comment }: CreateOrderParams) {
 //     try {
 //         connectToDB();
