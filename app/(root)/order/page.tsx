@@ -51,6 +51,11 @@ const Page = async () => {
     //   redirect('/login')
     // }
 
+     if(!email){
+      redirect('/login')
+    }
+
+
 
     const user = await fetchUserByEmail(email);
     
