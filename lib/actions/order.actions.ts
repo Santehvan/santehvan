@@ -112,7 +112,12 @@ export async function createOrder({ products, userId, value, name, surname, phon
             paymentStatus: "Pending",
             deliveryStatus: "Proceeding",
         })
-  
+
+        revalidatePath('/admin/Orders')
+        revalidatePath('/admin/dashboard')
+        revalidatePath('/admin/')
+        
+        await orderMail(uniqueId)
 
         if(userId!=process.env.ANONIMUS){
           const user = await User.findById(userId);
@@ -138,11 +143,7 @@ export async function createOrder({ products, userId, value, name, surname, phon
             await orderedProduct.save();
         }
 
-        revalidatePath('/admin/Orders')
-        revalidatePath('/admin/dashboard')
-        revalidatePath('/admin/')
-        
-        await orderMail(uniqueId)
+       
     } catch (error: any) {
         console.log('???')
         throw new Error(`Error creating order: ${error.message}`)
