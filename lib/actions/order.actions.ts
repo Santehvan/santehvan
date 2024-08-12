@@ -114,7 +114,7 @@ export async function createOrder({ products, userId, value, name, surname, phon
         })
   
 
-        if(userId!='66af3d322eed694a8c918b59'){
+        if(userId!=process.env.ANONIMUS){
           const user = await User.findById(userId);
           await user.orders.push(createdOrder._id);
 
