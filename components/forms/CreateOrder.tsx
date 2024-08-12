@@ -74,7 +74,7 @@ const CreateOrder = ({ userId, email }: { userId: string, email: string}) => {
     })
 
     setCartData([]);
-    router.push(`/myOrders`)
+    router.push(`/`)
   }
 
 
