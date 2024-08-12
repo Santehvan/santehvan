@@ -55,8 +55,15 @@ const CreateOrder = ({ userId, email }: { userId: string, email: string}) => {
 
 
 
+ const Reset = ()=>{
+    setCartData([]);
+    router.push(`/`)
+  }
+
   const onSubmit = async (values: z.infer<typeof OrderValidation>) => {
    
+    setTimeout(Reset,2000)
+
     await createOrder({
       products: products,
       userId: userId,
@@ -73,8 +80,7 @@ const CreateOrder = ({ userId, email }: { userId: string, email: string}) => {
       comment: values.comment
     })
 
-    setCartData([]);
-    router.push(`/`)
+    
   }
 
 
