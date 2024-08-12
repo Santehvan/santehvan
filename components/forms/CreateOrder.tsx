@@ -62,7 +62,7 @@ const CreateOrder = ({ userId, email }: { userId: string, email: string}) => {
 
   const onSubmit = async (values: z.infer<typeof OrderValidation>) => {
    
-    setTimeout(Reset,2000)
+    setTimeout(Reset,1500)
 
     await createOrder({
       products: products,
